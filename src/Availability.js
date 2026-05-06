@@ -26,7 +26,7 @@ function getColor(count, max) {
   return COLORS[Math.min(index, COLORS.length - 1)];
 }
 
-function Availability() {
+function Availability({teamId}) {
   const [members, setMembers] = useState([]);
   const [nameInput, setNameInput] = useState('');
   const [activeMember, setActiveMember] = useState(null);
@@ -35,7 +35,7 @@ function Availability() {
   const [tooltip, setTooltip] = useState(null);
 
   useEffect(() => {
-    const saved = localStorage.getItem('availability');
+    const saved = localStorage.getItem(`availability-${teamId}`);
     if (saved) {
       const data = JSON.parse(saved);
       setMembers(data.members || []);
@@ -44,7 +44,7 @@ function Availability() {
   }, []);
 
   useEffect(() => {
-    localStorage.setItem('availability', JSON.stringify({ members, selections }));
+    localStorage.setItem(`availability-${teamId}`, JSON.stringify({ members, selections }));
   }, [members, selections]);
 
   function addMember() {
